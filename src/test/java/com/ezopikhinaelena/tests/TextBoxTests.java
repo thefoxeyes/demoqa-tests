@@ -1,51 +1,46 @@
 package com.ezopikhinaelena.tests;
 
+import com.ezopikhinaelena.pages.CheckResultsWindow;
+import com.ezopikhinaelena.pages.RegistrationPage;
+import com.ezopikhinaelena.pages.components.CalendarComponent;
+import com.ezopikhinaelena.tests.utils.TestBase;
+import com.ezopikhinaelena.tests.utils.TestData;
 import org.junit.jupiter.api.Test;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
-import static com.ezopikhinaelena.tests.TestData.firstName;
-import static com.ezopikhinaelena.tests.TestData.lastName;
+public class TextBoxTests extends TestBase {
+    RegistrationPage registrationPage = new RegistrationPage();
+    CalendarComponent calendarComponent = new CalendarComponent();
+    CheckResultsWindow checkResultsWindow = new CheckResultsWindow();
+    TestData testData = new TestData();
 
-public class TextBoxTests extends TestBase{
-
-        @Test
+    @Test
     void fillFormTest() {
-        open("https://demoqa.com/automation-practice-form");
-        $("#firstName").setValue(firstName);
-        $("#lastName").setValue(lastName);
-        $("#userEmail").setValue("mail@mail.ru");
-        $("#genterWrapper").$(byText("Female")).click();
-        $("#userNumber").setValue("9999999999");
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption("1986");
-        $(".react-datepicker__month-select").selectOption("September");
-        $(".react-datepicker__day--030:not(.react-datepicker__day--outside-month)").click();
-        $("#subjectsInput").setValue("Computer Science").pressEnter();
-        $("#hobbiesWrapper").$(byText("Sports")).click();
-        $("#hobbiesWrapper").$(byText("Reading")).click();
-        $("#hobbiesWrapper").$(byText("Music")).click();
-        $("#uploadPicture").uploadFromClasspath("photo/ce30ff722e5ec13b8e3fc8eb1d2ffcac.jpeg");
-        $("#currentAddress").setValue("Street 1");
-        $("#react-select-3-input").setValue("NCR").pressEnter();
-        $("#react-select-4-input").setValue("Delhi").pressTab();
-        $("#submit").click();
+        registrationPage.openPage();
+        registrationPage.typeFirstName(testData.firstName);
+        registrationPage.typeLastName(testData.lastName);
+        registrationPage.typeEmail(testData.userEmail);
+        registrationPage.typeGender(testData.genterWrapper);
+        registrationPage.phoneNumber(testData.userNumber);
+        calendarComponent.setDate(testData.year, testData.month, testData.day);
+        registrationPage.subjectStudy(testData.subject);
+        registrationPage.hobbyType(testData.hobbiesWrapper);
+        registrationPage.pictureDownload("photo/ce30ff722e5ec13b8e3fc8eb1d2ffcac.jpeg");
+        registrationPage.addressType(testData.currentAddress);
+        registrationPage.stateCityType("NCR", "Delhi");
+        registrationPage.buttonType();
 
-        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
-        $(".table-responsive").shouldHave(text("Elena Bulochkina"));
-        $(".table-responsive").shouldHave(text("mail@mail.ru"));
-        $(".table-responsive").shouldHave(text("Female"));
-        $(".table-responsive").shouldHave(text("9999999999"));
-        $(".table-responsive").shouldHave(text("02 September,1986"));
-        $$(".table-responsive").findBy(text("Subjects")).shouldHave(text("Computer Science"));
-        $$(".table-responsive").findBy(text("Hobbies")).shouldHave(text("Sports, Reading, Music"));
-        $(".table-responsive").shouldHave(text("ce30ff722e5ec13b8e3fc8eb1d2ffcac.jpeg"));
-        $(".table-responsive").shouldHave(text("Street 1"));
-        $(".table-responsive").shouldHave(text("NCR Delhi"));
-        $("#submit").click();
+        checkResultsWindow.checkTitleWindow();
+        checkResultsWindow.checkValue(testData.firstName + " " + testData.lastName);
+        checkResultsWindow.checkValue(testData.userEmail);
+        checkResultsWindow.checkValue(testData.genterWrapper);
+        checkResultsWindow.checkValue(testData.userNumber);
+        checkResultsWindow.checkValue(testData.day + " " + testData.month + "," + testData.year);
+        checkResultsWindow.checkValueCollection("Subjects", testData.subject);
+        checkResultsWindow.checkValueCollection("Hobbies", testData.hobbiesWrapper);
+        checkResultsWindow.checkValue("ce30ff722e5ec13b8e3fc8eb1d2ffcac.jpeg");
+        checkResultsWindow.checkValue(testData.currentAddress);
+        checkResultsWindow.checkValue("NCR Delhi");
 
-        $(".modal-title").shouldHave(text("Thanks for submitting the form"));
-        $(".table-responsive").shouldHave((text(firstName + " " + lastName)));
+        checkResultsWindow.closeButton();
     }
 }
