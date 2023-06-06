@@ -3,11 +3,10 @@ package com.ezopikhinaelena.pages;
 import com.codeborne.selenide.SelenideElement;
 import com.ezopikhinaelena.pages.components.CalendarComponent;
 
-import java.util.Random;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class RegistrationPage {
 
@@ -23,8 +22,8 @@ public class RegistrationPage {
             hobbyChoose = $("#hobbiesWrapper"),
             pictureInput = $("#uploadPicture"),
             addressInput = $("#currentAddress"),
-            stateInput = $("#react-select-3-input"),
-            cityInput = $("#react-select-4-input"),
+            stateInput = $("#state"),
+            cityInput = $("#city"),
             buttonPush = $("#submit");
 
     public CalendarComponent calendar = new CalendarComponent();
@@ -71,16 +70,14 @@ public class RegistrationPage {
     }
 
     public void stateCityType(String state, String city) {
-        stateInput.setValue(state).pressEnter();
-        cityInput.setValue(city).pressTab();
+
+        stateInput.click();
+        stateInput.$(byText(state)).click();
+        cityInput.click();
+        cityInput.$(byText(city)).click();
     }
 
     public void buttonType() {
         buttonPush.click();
-    }
-
-    public void checkResultsValue(String key, String value) {
-        $x("//td[text()='" + key + "']").parent()
-                .shouldHave(text(value));
     }
 }

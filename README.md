@@ -35,3 +35,5 @@ Forms, presented in autotests:
 6. Upload picture form
 7. Dropdown
 8. Button
+
+All the locators are gathered in a separate class. Calendar also is separated in a package. Autotests structure is clear, simple and compact. Autotests themselves are readable and concise.

@@ -8,6 +8,7 @@ import com.ezopikhinaelena.tests.utils.TestData;
 import org.junit.jupiter.api.Test;
 
 public class TextBoxTests extends TestBase {
+
     RegistrationPage registrationPage = new RegistrationPage();
     CalendarComponent calendarComponent = new CalendarComponent();
     CheckResultsWindow checkResultsWindow = new CheckResultsWindow();
@@ -21,12 +22,12 @@ public class TextBoxTests extends TestBase {
         registrationPage.typeEmail(testData.userEmail);
         registrationPage.typeGender(testData.genterWrapper);
         registrationPage.phoneNumber(testData.userNumber);
-        calendarComponent.setDate(testData.year, testData.month, testData.day);
+        calendarComponent.setDate(testData.month, testData.year, testData.day);
         registrationPage.subjectStudy(testData.subject);
         registrationPage.hobbyType(testData.hobbiesWrapper);
         registrationPage.pictureDownload("photo/ce30ff722e5ec13b8e3fc8eb1d2ffcac.jpeg");
         registrationPage.addressType(testData.currentAddress);
-        registrationPage.stateCityType("NCR", "Delhi");
+        registrationPage.stateCityType(testData.state, testData.city);
         registrationPage.buttonType();
 
         checkResultsWindow.checkTitleWindow();
@@ -39,7 +40,7 @@ public class TextBoxTests extends TestBase {
         checkResultsWindow.checkValueCollection("Hobbies", testData.hobbiesWrapper);
         checkResultsWindow.checkValue("ce30ff722e5ec13b8e3fc8eb1d2ffcac.jpeg");
         checkResultsWindow.checkValue(testData.currentAddress);
-        checkResultsWindow.checkValue("NCR Delhi");
+        checkResultsWindow.checkValue(testData.state + " " + testData.city);
 
         checkResultsWindow.closeButton();
     }
